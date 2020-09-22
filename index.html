@@ -18,17 +18,44 @@
 
 	<meta name="viewport" content="user-scalable=yes, width=800" />
 	<link href='https://fonts.googleapis.com/css?family=Unica+One&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Turret+Road&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Krona+One&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Kite+One&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Saira+Condensed&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=DM+Mono&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Bubblegum+Sans&subset=latin' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Lalezar&subset=latin' rel='stylesheet' type='text/css'>
 	
 	<script>
-	var SEQUENCECOUNT = 1;
-	var CURRENTELEMENT = 0;
-	var BUTTONSCLICKABLE = false;
-	var GAMEOVER = true;
-	var COLORSEQUENCE = new Array();
-	var PLAYINTERVAL;
-	var SELECTCOLOR; 
-	var LISTENSEQUENCE;
-	var INTERVALSPEED; 
+	var gblSequenceCount = 1,				// The number of colors in the sequence that the user must recall
+		 gblCurrentElement = 0,				// Used to index the color sequence
+		 gblScore = 0,						// The current score
+		 gblScoreMultiplier = 10,			// The number to multiply each correctly chosen button with when calculating the score.
+		 gblSeconds = 0,						// The number of elapsed seconds of gametime
+		 gblTimeString,						// A formatted string of the most recent elapsed gametime in HH:MM:SS format
+		 gblButtonsClickable = false,		// Used to turn buttons on and off
+		 gblGameOver = true,				// Set to true when the game is over
+		 gblColorSequence = [], 			// An array of colors representing the full color sequence
+		 gblPlayInterval,					// Used as a reference to the setInterval function that calls gblSelectColor
+		 gblPlayBeep,							// Used as a reference to the function that plays the appropriate beep sound
+		 gblSelectColor, 					// Used as a reference to the function that plays back the beeps that the user must recall
+		 gblListenSequence,					// Used as a reference to the function that listens for user input
+		 gblTimeFunction,					// Used as a reference to the function that updates the timer
+		 gblIntervalSpeed, 					// The amound of time in milliseconds to wait to play the next sound
+		 gblSoundMode = "classic";			// One of three sound modes the user may choose when starting the game
+	const gblNumberOfColors = 100,		// The number of colors in gblColorSequence
+		   gblEasySpeed = 1000,				// The delay speed in milliseconds between tones when the user clicks the 'SLOW' button on the splash screen
+		   gblHardSpeed = 400,				// The delay speed in milliseconds between tones when the user clicks the 'FAST' button on the splash screen
+		   gblTurboSpeed = 200,				// The delay speed in milliseconds between tones when the user clicks the 'TURBO' button on the splash screen
+			gblTimeoutDelay = 1500,			// The default delay in milliseconds to wait during when the setTimeout function is called
+			gblBadgeIncrement = 5;			// The badge will be shown on rounds that are divisible by this number
+	
+	// An array of message strings to be appended to the end of the badge text. The string at index 0 is displayed last.
+	var gblBadgeMessages = ["BRILLIANT!", "GREAT!", "ASTOUNDING!", "GROOVY.", "ZOUNDS!", "EGADS!", "COPACETIC.",
+								 "<span style='font-size: 60%; display: block;'>SUPERCALIFRAGILISTIC-<br>EXPIALIDOCIOUS!</span>",
+								 "<span style='font-size: 60%; display: block;'>DOCIOUSALIEXPILISTIC-<BR>FRAGICALISUPER!</span>", "GADZOOKS!"];
+	
+	const gblNumMessages = gblBadgeMessages.length;
 	</script>
 	
 
@@ -38,7 +65,7 @@
 	<!-- copy these lines to your document: -->
 
 	<div id="index_hype_container" class="HYPE_document" style="margin:auto;position:relative;width:800px;height:600px;overflow:hidden;">
-		<script type="text/javascript" charset="utf-8" src="index.hyperesources/index_hype_generated_script.js?73942"></script>
+		<script type="text/javascript" charset="utf-8" src="index.hyperesources/index_hype_generated_script.js?84961"></script>
 	</div>
 
 	<!-- end copy -->
@@ -52,15 +79,35 @@
 		<div>SIMON
 SAYS</div>
 		<div>QUIT</div>
-		<div>NEXT</div>
+		<div>N
+E
+X
+T</div>
+		<div>GO</div>
+		<div>00:00:00</div>
+		<div></div>
 		<div>SCORE
 0</div>
 		<div>5 ROUNDS
 BRILLIANT</div>
-		<div>EASY</div>
-		<div>HARD</div>
+		<div>3</div>
+		<div>2</div>
+		<div>1</div>
+		<div>SLOW</div>
+		<div>TURBO</div>
 		<div>Can You Do What Simon Says And Follow The Pattern Of Lights And Sounds?</div>
+		<div>FAST</div>
 		<div>simon says</div>
+		<div>Time Elapsed: 00:00:00</div>
+		<div>Final Score: 10000</div>
+		<div>Simon is at a loss for words.
+Congratulations!</div>
+		<div>Rounds Completed: 100</div>
+		<div>RESTART</div>
+		<div>CHORD</div>
+		<div>ANIMAL</div>
+		<div>Please choose a sound mode.</div>
+		<div>CLASSIC</div>
 
 	</div>
 
