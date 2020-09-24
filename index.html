@@ -44,6 +44,8 @@
 		 gblTimeFunction,					// Used as a reference to the function that updates the timer
 		 gblIntervalSpeed, 					// The amound of time in milliseconds to wait to play the next sound
 		 gblNumberOfColors = 100,			// The number of colors in gblColorSequence
+		 gblPointsAwarded = 0;				// The number of points awarded at the end of a round
+		 gblBadgeIncrement = 5,				// The badge will be shown on rounds that are divisible by this number
 		 gblSoundMode = "classic",			// One of three sound modes the user may choose when starting the game
 		 gblSoundTurn = 0;					// Used to choose an audio element to avoid unwanted clicks when the same audio file plays twice in a row.
 		 										// There are two audio elements for each mp3 file with element id's that end with 0 or 1. By alternating elements
@@ -53,8 +55,8 @@
 		 const gblEasySpeed = 1000,		// The delay speed in milliseconds between tones when the user clicks the 'SLOW' button on the splash screen
 		   gblHardSpeed = 400,				// The delay speed in milliseconds between tones when the user clicks the 'FAST' button on the splash screen
 		   gblTurboSpeed = 200,				// The delay speed in milliseconds between tones when the user clicks the 'TURBO' button on the splash screen
-			gblTimeoutDelay = 1500,			// The default delay in milliseconds to wait during when the setTimeout function is called
-			gblBadgeIncrement = 5;			// The badge will be shown on rounds that are divisible by this number
+			gblTimeoutDelay = 1500;		// The default delay in milliseconds to wait during when the setTimeout function is called
+
 	
 	// An array of message strings to be appended to the end of the badge text. The string at index 0 is displayed last.
 	var gblBadgeMessages = ["BRILLIANT!", "GREAT!", "ASTOUNDING!", "GROOVY.", "ZOUNDS!", "EGADS!", "COPACETIC.",
@@ -71,7 +73,7 @@
 	<!-- copy these lines to your document: -->
 
 	<div id="index_hype_container" class="HYPE_document" style="margin:auto;position:relative;width:800px;height:600px;overflow:hidden;">
-		<script type="text/javascript" charset="utf-8" src="index.hyperesources/index_hype_generated_script.js?47538"></script>
+		<script type="text/javascript" charset="utf-8" src="index.hyperesources/index_hype_generated_script.js?5883"></script>
 	</div>
 
 	<!-- end copy -->
